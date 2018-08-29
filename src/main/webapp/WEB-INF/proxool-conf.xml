@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding = "utf-8"?>
+<something-else-entirely>
+<proxool>
+<!-- ??ç½®proxool?ˆ¥??? -->
+<alias>proxool</alias>
+
+<!-- ??ç½®è¿žæŽ¥??„æ•°?®åº“ä¿¡?¯ -->
+<driver-url>jdbc:mysql://localhost:3306/graduate</driver-url>
+<driver-class>com.mysql.jdbc.Driver</driver-class>
+<driver-properties>
+<property name="user" value="root" />
+<property name="password" value="egroup23622508" />
+</driver-properties>
+<!-- proxool?‡ª?Š¨ä¾¦æŸ¥??„ä¸ªè¿žæŽ¥?Š¶?ç?„æ—¶?—´?—´??”ï?ˆæ¯«ç§’ï?‰ï?Œä¾¦?Ÿ¥?ˆ°ç©ºé—²??„è?žæŽ¥å°±é©¬ä¸? ??žæ”¶ï¼Œè?…æ—¶??„é?æ¯? -->
+<house-keeping-sleep-time>900000</house-keeping-sleep-time>
+<!-- ??å¤§è?žæŽ¥?•° -->
+<maximum-connection-count>30</maximum-connection-count>
+<!-- ??å°è?žæŽ¥?•° -->
+<minimum-connection-count>5</minimum-connection-count>
+<!--è¿žæŽ¥æ± ä¸­?¯?”¨??„è?žæŽ¥?•°???.å¦‚æ?œå?“å?ç?„è?žæŽ¥æ± ä¸­??„è?žæŽ¥å°‘ä?Žè?™ä¸ª?•°??.?–°??„è?žæŽ¥å°†è¢«å»ºç?? -->
+<prototype-count>3</prototype-count>
+<!-- ?¯ä¸?æ¬¡å»ºç«‹ç?„æ?å¤§è?žæŽ¥?•°?‚é‚£å°±æ˜¯?–°å¢žç?„è?žæŽ¥è¯·æ??,ä½†è?˜æ²¡??‰å¯ä¾›ä½¿?”¨??„è?žæŽ¥ï¼Œé?˜è®¤ä¸?10 -->
+<simultaneous-build-throttle>10</simultaneous-build-throttle>
+<!-- ?—¥å¿—ç?Ÿè®¡è·Ÿè¸ªç±»å?‹ã?‚å?‚æ•°?œERROR?æ?? ?œINFO?? -->
+<statistics-log-level>INFO</statistics-log-level>
+</proxool>
+</something-else-entirely>
+

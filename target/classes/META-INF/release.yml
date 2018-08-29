@@ -1,0 +1,3 @@
+aws:
+	  bucketname: null
+	  loggroupname: null_release_logs
