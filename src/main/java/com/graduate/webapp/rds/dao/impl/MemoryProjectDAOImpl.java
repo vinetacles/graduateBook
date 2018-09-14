@@ -11,26 +11,26 @@ import com.egroup.util.SqlUtil;
 
 import javax.sql.DataSource;
 
-import com.graduate.webapp.rds.dao.Memory_projectDAO;
+import com.graduate.webapp.rds.dao.MemoryProjectDAO;
 import com.graduate.webapp.rds.entity.MemoryProject;
 
-public class Memory_projectDAOImpl implements Memory_projectDAO{
+public class MemoryProjectDAOImpl implements MemoryProjectDAO{
 private DataSource dataSource;
 
 public void setDataSource(DataSource dataSource) {
 this.dataSource = dataSource;
 }
 // insert Memory_project
-public void insert(MemoryProject memory_project) {
+public void insert(MemoryProject memoryProject) {
 Connection conn = null ;
 PreparedStatement smt = null ;
 final String sql = "INSERT INTO memory_project(memoryProjectId,memoryProjectName , memoryProjectCreateDate , memoryProjectUpdateDate , memberAccount ) VALUES ( ? ,  ? ,  ? ,  ? ,  ? )";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setString(1, memory_project.getMemoryProjectId());
-smt.setString(2, memory_project.getMemoryProjectName());
-smt.setString(5, memory_project.getMember().getMemberAccount());
+smt.setString(1, memoryProject.getMemoryProjectId());
+smt.setString(2, memoryProject.getMemoryProjectName());
+smt.setString(5, memoryProject.getMember().getMemberAccount());
 smt.executeUpdate();
 smt.close();
 
@@ -49,16 +49,16 @@ conn.close();
 
 
 // insert Memory_project
-public void insert(List<MemoryProject> memory_projectList) {
+public void insert(List<MemoryProject> memoryProjectList) {
 Connection conn = null ;
 PreparedStatement smt = null ;
 final String sql = "INSERT INTO memory_project(memoryProjectId,memoryProjectName , memoryProjectCreateDate , memoryProjectUpdateDate , memberAccount ) VALUES ( ? ,  ? ,  ? ,  ? ,  ? )";
 try {
 conn = dataSource.getConnection();
-for (int i = 0; i < memory_projectList.size() ; i++) {
-smt.setString(1, memory_projectList.get(0).getMemoryProjectId());
-smt.setString(2, memory_projectList.get(1).getMemoryProjectName());
-smt.setString(5, memory_projectList.get(4).getMember().getMemberAccount());
+for (int i = 0; i < memoryProjectList.size() ; i++) {
+smt.setString(1, memoryProjectList.get(0).getMemoryProjectId());
+smt.setString(2, memoryProjectList.get(1).getMemoryProjectName());
+smt.setString(5, memoryProjectList.get(4).getMember().getMemberAccount());
 smt.addBatch();
 }
 smt.executeBatch();
@@ -79,15 +79,15 @@ conn.close();
 
 
 // update Memory_project
-public void update(MemoryProject memory_project,MemoryProject oldMemory_project) {
+public void update(MemoryProject memoryProject,MemoryProject oldMemoryProject) {
 Connection conn = null ;
 PreparedStatement smt = null ;
 final String sql = "UPDATE memory_project SET memoryProjectName = ? , memoryProjectCreateDate = ? , memoryProjectUpdateDate = ? , memberAccount = ?  WHERE memoryProjectId = ? ";
 try {
 conn = dataSource.getConnection();
-smt.setString(1, memory_project.getMemoryProjectName()!=null?memory_project.getMemoryProjectName():oldMemory_project.getMemoryProjectName());
-smt.setString(4, memory_project.getMember().getMemberAccount()!=null?memory_project.getMember().getMemberAccount():oldMemory_project.getMember().getMemberAccount());
-smt.setString(5, memory_project.getMemoryProjectId()!=null?memory_project.getMemoryProjectId():oldMemory_project.getMemoryProjectId());
+smt.setString(1, memoryProject.getMemoryProjectName()!=null?memoryProject.getMemoryProjectName():oldMemoryProject.getMemoryProjectName());
+smt.setString(4, memoryProject.getMember().getMemberAccount()!=null?memoryProject.getMember().getMemberAccount():oldMemoryProject.getMember().getMemberAccount());
+smt.setString(5, memoryProject.getMemoryProjectId()!=null?memoryProject.getMemoryProjectId():oldMemoryProject.getMemoryProjectId());
 smt.executeUpdate();
 smt.close();
 
@@ -106,14 +106,14 @@ conn.close();
 
 
 // delete Memory_project
-public void delete(MemoryProject memory_project) {
+public void delete(MemoryProject memoryProject) {
 Connection conn = null ;
 PreparedStatement smt = null ;
 final String sql = "DELETE FROM memory_project WHERE memoryProjectId = ? ";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setString(1, memory_project.getMemoryProjectId());
+smt.setString(1, memoryProject.getMemoryProjectId());
 smt.executeUpdate();
 smt.close();
 
@@ -132,7 +132,7 @@ conn.close();
 
 
 // GET Memory_project
-public MemoryProject get(MemoryProject memory_project) {
+public MemoryProject get(MemoryProject memoryProject) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
@@ -140,12 +140,12 @@ final String sql = "SELECT a.memoryProjectId , a.memoryProjectName , a.memoryPro
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setString(1, memory_project.getMemoryProjectId());
+smt.setString(1, memoryProject.getMemoryProjectId());
 rs = smt.executeQuery();
 if(rs.next()){
-memory_project.setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project.setMemoryProjectName(rs.getString("memoryProjectName"));
-memory_project.getMember().setMemberAccount(rs.getString("memberAccount"));
+memoryProject.setMemoryProjectId(rs.getString("memoryProjectId"));
+memoryProject.setMemoryProjectName(rs.getString("memoryProjectName"));
+memoryProject.getMember().setMemberAccount(rs.getString("memberAccount"));
 }
 rs.close();
 smt.close();
@@ -161,12 +161,12 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_project;
+return memoryProject;
 }
 
 
 // get_JoinBy Memory_project
-public MemoryProject get_JoinByMemberAccount(MemoryProject memory_project) {
+public MemoryProject get_JoinByMemberAccount(MemoryProject memoryProject) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
@@ -174,12 +174,12 @@ final String sql = "[SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.fr
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setString(1, memory_project.getMemoryProjectId());
+smt.setString(1, memoryProject.getMemoryProjectId());
 rs = smt.executeQuery();
 if(rs.next()){
-memory_project.setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project.setMemoryProjectName(rs.getString("memoryProjectName"));
-memory_project.getMember().setMemberAccount(rs.getString("memberAccount"));
+memoryProject.setMemoryProjectId(rs.getString("memoryProjectId"));
+memoryProject.setMemoryProjectName(rs.getString("memoryProjectName"));
+memoryProject.getMember().setMemberAccount(rs.getString("memberAccount"));
 }
 rs.close();
 smt.close();
@@ -195,7 +195,7 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_project;
+return memoryProject;
 }
 
 
@@ -205,7 +205,7 @@ public List<MemoryProject> getList(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<MemoryProject> memory_projectList = new ArrayList<MemoryProject>();
+List<MemoryProject> memoryProjectList = new ArrayList<MemoryProject>();
 final String sql = "SELECT a.memoryProjectId , a.memoryProjectName , a.memoryProjectCreateDate , a.memoryProjectUpdateDate , a.memberAccount FROM memory_project a "+
 sqlUtil.getWhereGenerator().getWhereSql(true)+
 sqlUtil.getOrderGenerator().getOrderSql()+
@@ -214,12 +214,12 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-MemoryProject memory_project = new MemoryProject();
+MemoryProject memoryProject = new MemoryProject();
 while(rs.next()){
-memory_project = new MemoryProject();
-memory_project.setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project.setMemoryProjectName(rs.getString("memoryProjectName"));
-memory_projectList.add(memory_project);
+memoryProject = new MemoryProject();
+memoryProject.setMemoryProjectId(rs.getString("memoryProjectId"));
+memoryProject.setMemoryProjectName(rs.getString("memoryProjectName"));
+memoryProjectList.add(memoryProject);
 }
 rs.close();
 smt.close();
@@ -235,7 +235,7 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_projectList;
+return memoryProjectList;
 }
 
 
@@ -244,7 +244,7 @@ public List<MemoryProject> getList_Join(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<MemoryProject> memory_projectList = new ArrayList<MemoryProject>();
+List<MemoryProject> memoryProjectList = new ArrayList<MemoryProject>();
 final String sql = "SELECT a.memoryProjectId , a.memoryProjectName , a.memoryProjectCreateDate , a.memoryProjectUpdateDate , a.memberAccount FROM memory_project a  JOIN member b ON a.memberAccount = b.memberAccount "+
 sqlUtil.getWhereGenerator().getWhereSql(true)+
 sqlUtil.getOrderGenerator().getOrderSql()+
@@ -253,12 +253,12 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-MemoryProject memory_project = new MemoryProject();
+MemoryProject memoryProject = new MemoryProject();
 while(rs.next()){
-memory_project = new MemoryProject();
-memory_project.setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project.setMemoryProjectName(rs.getString("memoryProjectName"));
-memory_projectList.add(memory_project);
+memoryProject = new MemoryProject();
+memoryProject.setMemoryProjectId(rs.getString("memoryProjectId"));
+memoryProject.setMemoryProjectName(rs.getString("memoryProjectName"));
+memoryProjectList.add(memoryProject);
 }
 rs.close();
 smt.close();
@@ -274,7 +274,7 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_projectList;
+return memoryProjectList;
 }
 
 
@@ -284,7 +284,7 @@ public List<MemoryProject> getList_JoinByMemberAccount(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<MemoryProject> memory_projectList = new ArrayList<MemoryProject>();
+List<MemoryProject> memoryProjectList = new ArrayList<MemoryProject>();
 final String sql = "SELECT a.memoryProjectId , a.memoryProjectName , a.memoryProjectCreateDate , a.memoryProjectUpdateDate , a.memberAccount FROM memory_project a  JOIN member b ON a.memberAccount = b.memberAccount WHRER b.memberAccount = ? "+
 sqlUtil.getWhereGenerator().getWhereSql(false)+
 sqlUtil.getOrderGenerator().getOrderSql()+
@@ -293,12 +293,12 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-MemoryProject memory_project = new MemoryProject();
+MemoryProject memoryProject = new MemoryProject();
 while(rs.next()){
-memory_project = new MemoryProject();
-memory_project.setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project.setMemoryProjectName(rs.getString("memoryProjectName"));
-memory_projectList.add(memory_project);
+memoryProject = new MemoryProject();
+memoryProject.setMemoryProjectId(rs.getString("memoryProjectId"));
+memoryProject.setMemoryProjectName(rs.getString("memoryProjectName"));
+memoryProjectList.add(memoryProject);
 }
 rs.close();
 smt.close();
@@ -314,7 +314,7 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_projectList;
+return memoryProjectList;
 }
 
 
@@ -351,7 +351,7 @@ return countTotal;
 }
 
 
-//countTotalList Memory_project
+//countTotalList MemoryProject
 public Integer countTotal(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;

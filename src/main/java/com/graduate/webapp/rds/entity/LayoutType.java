@@ -2,7 +2,7 @@ package com.graduate.webapp.rds.entity;
 
 import java.sql.Date;
 
-public class Layout_type {
+public class LayoutType {
 // Database Column
 private Integer layoutTypeId;
 private Integer frameNumber;

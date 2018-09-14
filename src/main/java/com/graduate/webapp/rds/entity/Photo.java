@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Photo {
 // Database Column
 private Integer photoId;
-private MemoryProject memory_project = new MemoryProject();
+private MemoryProject memoryProject = new MemoryProject();
 private String photoPath;
 private String photoLocation;
 private Member member = new Member();
@@ -21,11 +21,11 @@ public void setPhotoId(Integer photoId) {
 this.photoId = photoId;
 }
 
-public MemoryProject getMemory_project() {
-return memory_project;
+public MemoryProject getMemoryProject() {
+return memoryProject;
 }
-public void setMemory_project(MemoryProject memory_project) {
-this.memory_project = memory_project;
+public void setMemory_project(MemoryProject memoryProject) {
+this.memoryProject = memoryProject;
 }
 
 public String getPhotoPath() {

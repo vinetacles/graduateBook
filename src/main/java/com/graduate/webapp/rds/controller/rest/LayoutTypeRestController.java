@@ -24,8 +24,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 
-import com.graduate.webapp.rds.entity.Layout_type;
-import com.graduate.webapp.rds.dao.Layout_typeDAO;
+import com.graduate.webapp.rds.entity.LayoutType;
+import com.graduate.webapp.rds.dao.LayoutTypeDAO;
 import com.egroup.util.AttributeCheck;
 import com.egroup.util.CookieUtil;
 import com.egroup.util.entity.WebResponse;
@@ -37,18 +37,18 @@ import com.egroup.util.entity.EqualGenerator;
 import com.egroup.login.token.util.LoginUtil;
 import com.egroup.login.dynamoDB.entity.LoginToken;
 
-@Path("/layout_type")
+@Path("/layoutType")
 @Controller
-public class Layout_typeRestController {
-private static Logger LOGGER = LoggerFactory.getLogger(Layout_typeRestController.class);
+public class LayoutTypeRestController {
+private static Logger LOGGER = LoggerFactory.getLogger(LayoutTypeRestController.class);
 final ApplicationContext context = new ClassPathXmlApplicationContext("spring-module-rds.xml");
 
 
 @POST
 @Consumes(MediaType.APPLICATION_JSON)
-public Response insert(Layout_type layout_type, @Context HttpServletRequest request,@Context HttpServletResponse response) {
+public Response insert(LayoutType layoutType, @Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Layout_typeDAO layout_typeDAO = (Layout_typeDAO) context.getBean("layout_typeDAO");
+final LayoutTypeDAO layoutTypeDAO = (LayoutTypeDAO) context.getBean("layoutTypeDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -60,8 +60,8 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-layout_typeDAO.insert(layout_type);
-webResponse.setData(layout_type);
+layoutTypeDAO.insert(layoutType);
+webResponse.setData(layoutType);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -74,9 +74,9 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 
 @PATCH
 @Consumes(MediaType.APPLICATION_JSON)
-public Response udpate(Layout_type layout_type, @Context HttpServletRequest request,@Context HttpServletResponse response) {
+public Response udpate(LayoutType layoutType, @Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Layout_typeDAO layout_typeDAO = (Layout_typeDAO) context.getBean("layout_typeDAO");
+final LayoutTypeDAO layoutTypeDAO = (LayoutTypeDAO) context.getBean("layoutTypeDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -88,9 +88,9 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-final Layout_type oldLayout_type = layout_typeDAO.get(layout_type);
-layout_typeDAO.update(layout_type,oldLayout_type);
-webResponse.setData(layout_type);
+final LayoutType oldLayoutType = layoutTypeDAO.get(layoutType);
+layoutTypeDAO.update(layoutType,oldLayoutType);
+webResponse.setData(layoutType);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -105,7 +105,7 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 @Path("/{layoutTypeId}")
 public Response delete(@PathParam("layoutTypeId") Integer layoutTypeId,@Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Layout_typeDAO layout_typeDAO = (Layout_typeDAO) context.getBean("layout_typeDAO");
+final LayoutTypeDAO layoutTypeDAO = (LayoutTypeDAO) context.getBean("layoutTypeDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -117,10 +117,10 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-final Layout_type layout_type = new Layout_type();
-layout_type.setLayoutTypeId(layoutTypeId);
-layout_typeDAO.delete(layout_type);
-webResponse.setData(layout_type);
+final LayoutType layoutType = new LayoutType();
+layoutType.setLayoutTypeId(layoutTypeId);
+layoutTypeDAO.delete(layoutType);
+webResponse.setData(layoutType);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -136,7 +136,7 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 @Path("/{layoutTypeId}")
 public Response get(@PathParam("layoutTypeId") Integer layoutTypeId,@Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Layout_typeDAO layout_typeDAO = (Layout_typeDAO) context.getBean("layout_typeDAO");
+final LayoutTypeDAO layoutTypeDAO = (LayoutTypeDAO) context.getBean("layoutTypeDAO");
 // init func
 final AttributeCheck attributeCheck = new AttributeCheck();
 final CookieUtil cookieUtil = new CookieUtil();
@@ -149,11 +149,11 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-Layout_type layout_type = new Layout_type();
-layout_type.setLayoutTypeId(layoutTypeId);
-layout_type = layout_typeDAO.get(layout_type);
-if(layout_type != null){
-webResponse.setData(layout_type);
+LayoutType layoutType = new LayoutType();
+layoutType.setLayoutTypeId(layoutTypeId);
+layoutType = layoutTypeDAO.get(layoutType);
+if(layoutType != null){
+webResponse.setData(layoutType);
 webResponse.OK();
 }else{
 webResponse.NOT_FOUND();
@@ -173,7 +173,7 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 @GZIP
 public Response list(@DefaultValue("0") @QueryParam("offset") Integer offset,@QueryParam("search")String search,@DefaultValue("10") @QueryParam("limit")Integer limit,@Context HttpServletRequest request, @Context HttpServletResponse response) {
 // init DAO
-final Layout_typeDAO layout_typeDAO = (Layout_typeDAO) context.getBean("layout_typeDAO");
+final LayoutTypeDAO layoutTypeDAO = (LayoutTypeDAO) context.getBean("layoutTypeDAO");
 // init func
 final AttributeCheck attributeCheck = new AttributeCheck();
 final CookieUtil cookieUtil = new CookieUtil();
@@ -201,8 +201,8 @@ sqlUtil.getOrderGenerator().setAsc(false);
 // sqlUtil.getWhereGenerator().getEqualGenerator().setEqualHashMap("a.organizationId", organizationId);
 
 // Get List By SqlUtil
-List<Layout_type> layout_typeList = layout_typeDAO.getList(sqlUtil);
-webResponse.setData(layout_typeList);
+List<LayoutType> layoutTypeList = layoutTypeDAO.getList(sqlUtil);
+webResponse.setData(layoutTypeList);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -216,9 +216,9 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 @GET
 @Path("/list")
 @GZIP
-public Response listCount(@QueryParam("search")String search,@Context HttpServletRequest request, @Context HttpServletResponse response) {
+public Response listCount(@QueryParam("search")String search,@Context HttpServletRequest request, @Context HttpServletResponse response, Integer offset, Integer limit) {
 // init DAO
-final Layout_typeDAO layout_typeDAO = (Layout_typeDAO) context.getBean("layout_typeDAO");
+final LayoutTypeDAO layoutTypeDAO = (LayoutTypeDAO) context.getBean("layoutTypeDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -245,7 +245,7 @@ sqlUtil.getOrderGenerator().setAsc(false);
 // sqlUtil.getWhereGenerator().getEqualGenerator().setEqualHashMap("a.organizationId", organizationId);
 
 // Get ListCount By SqlUtil
-final int countTotal = layout_typeDAO.countTotal(sqlUtil);
+final int countTotal = layoutTypeDAO.countTotal(sqlUtil);
 webResponse.setData(countTotal);
 webResponse.OK();
 }else{

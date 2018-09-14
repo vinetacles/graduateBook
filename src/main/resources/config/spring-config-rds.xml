@@ -3,34 +3,44 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-<bean id="layoutSettingDAO" class="com.null.webapp.rds.dao.impl.LayoutSettingDAOImpl">
+
+<bean id="LayoutSettingDAO" class="com.null.webapp.rds.dao.impl.LayoutSettingDAOImpl">
 <property name="dataSource" ref="dataSource" />
 </bean>
-<bean id="layoutTypeDAO" class="com.null.webapp.rds.dao.impl.LayoutTypeDAOImpl">
+<bean id="LayoutTypeDAO" class="com.null.webapp.rds.dao.impl.LayoutTypeDAOImpl">
 <property name="dataSource" ref="dataSource" />
 </bean>
-<bean id="memberDAO" class="com.null.webapp.rds.dao.impl.MemberDAOImpl">
+<bean id="MemberDAO" class="com.null.webapp.rds.dao.impl.MemberDAOImpl">
 <property name="dataSource" ref="dataSource" />
 </bean>
-<bean id="memoryBookDAO" class="com.null.webapp.rds.dao.impl.MemoryBookDAOImpl">
+<bean id="MemoryBookDAO" class="com.null.webapp.rds.dao.impl.MemoryBookDAOImpl">
 <property name="dataSource" ref="dataSource" />
 </bean>
-<bean id="memoryProjectDAO" class="com.null.webapp.rds.dao.impl.MemoryProjectDAOImpl">
+<bean id="MemoryProjectDAO" class="com.null.webapp.rds.dao.impl.MemoryProjectDAOImpl">
 <property name="dataSource" ref="dataSource" />
 </bean>
-<bean id="memoryProjectInvitedDAO" class="com.null.webapp.rds.dao.impl.MemoryProjectInvitedDAOImpl">
+<bean id="MemoryProjectInvitedDAO" class="com.null.webapp.rds.dao.impl.MemoryProjectInvitedDAOImpl">
 <property name="dataSource" ref="dataSource" />
 </bean>
-<bean id="pageDAO" class="com.null.webapp.rds.dao.impl.PageDAOImpl">
+<bean id="PageDAO" class="com.null.webapp.rds.dao.impl.PageDAOImpl">
 <property name="dataSource" ref="dataSource" />
 </bean>
-<bean id="pageDetailDAO" class="com.null.webapp.rds.dao.impl.PageDetailDAOImpl">
+<bean id="PageDetailDAO" class="com.null.webapp.rds.dao.impl.PageDetailDAOImpl">
 <property name="dataSource" ref="dataSource" />
 </bean>
-<bean id="photoDAO" class="com.null.webapp.rds.dao.impl.PhotoDAOImpl">
+<bean id="PhotoDAO" class="com.null.webapp.rds.dao.impl.PhotoDAOImpl">
 <property name="dataSource" ref="dataSource" />
 </bean>
-<bean id="templateDAO" class="com.null.webapp.rds.dao.impl.TemplateDAOImpl">
+<bean id="TemplateDAO" class="com.null.webapp.rds.dao.impl.TemplateDAOImpl">
+<property name="dataSource" ref="dataSource" />
+</bean>
+<bean id="LoginDAO" class="com.null.webapp.rds.dao.impl.LoginDAOImpl">
+<property name="dataSource" ref="dataSource" />
+</bean>
+<bean id="LoginLoadDAO" class="com.null.webapp.rds.dao.impl.LoginLoadDAOImpl">
+<property name="dataSource" ref="dataSource" />
+</bean>
+<bean id="LoginTokenDAO" class="com.null.webapp.rds.dao.impl.LoginTokenDAOImpl">
 <property name="dataSource" ref="dataSource" />
 </bean>
 </beans>

@@ -7,31 +7,35 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.mysql.jdbc.Statement;
-import com.egroup.util.SqlUtil;
+
 
 import javax.sql.DataSource;
 
-import com.graduate.webapp.rds.dao.Memory_project_invitedDAO;
-import com.graduate.webapp.rds.entity.Memory_project_invited;
+import com.egroup.util.SqlUtil;
+import com.graduate.webapp.rds.dao.LayoutSettingDAO;
+import com.graduate.webapp.rds.entity.LayoutSetting;
 
-public class Memory_project_invitedDAOImpl implements Memory_project_invitedDAO{
+public class LayoutSettingDAOImpl implements LayoutSettingDAO{
 private DataSource dataSource;
 
 public void setDataSource(DataSource dataSource) {
 this.dataSource = dataSource;
 }
-// insert Memory_project_invited
-public void insert(Memory_project_invited memory_project_invited) {
+// insert Layout_setting
+public void insert(LayoutSetting layoutSetting) {
 Connection conn = null ;
 PreparedStatement smt = null ;
-final String sql = "INSERT INTO memory_project_invited(memoryProjectInvitedAccount,memoryProjectId , memoryProjectInvitedStatus , memoryProjectInvitedCreateDate , memoryProjectInvitedUpdateDate , memoryProjectInvitedNo ) VALUES ( ? ,  ? ,  ? ,  ? ,  ? ,  ? )";
+final String sql = "INSERT INTO layout_setting(layoutSettingId,layoutTypeId , frameX , frameY , frameWidth , frameHeight , templateId ) VALUES ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? )";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setString(1, memory_project_invited.getMember().getMemoryProjectInvitedAccount());
-smt.setString(2, memory_project_invited.getMemoryProject().getMemoryProjectId());
-smt.setInt(3, memory_project_invited.getMemoryProjectInvitedStatus());
-smt.setString(6, memory_project_invited.getMemoryProjectInvitedNo());
+smt.setInt(1, layoutSetting.getLayoutSettingId());
+smt.setInt(2, layoutSetting.getLayoutType().getLayoutTypeId());
+smt.setInt(3, layoutSetting.getFrameX());
+smt.setInt(4, layoutSetting.getFrameY());
+smt.setInt(5, layoutSetting.getFrameWidth());
+smt.setInt(6, layoutSetting.getFrameHeight());
+smt.setInt(7, layoutSetting.getTemplate().getTemplateId());
 smt.executeUpdate();
 smt.close();
 
@@ -49,18 +53,21 @@ conn.close();
 }
 
 
-// insert Memory_project_invited
-public void insert(List<Memory_project_invited> memory_project_invitedList) {
+// insert Layout_setting
+public void insert(List<LayoutSetting> layoutSettingList) {
 Connection conn = null ;
 PreparedStatement smt = null ;
-final String sql = "INSERT INTO memory_project_invited(memoryProjectInvitedAccount,memoryProjectId , memoryProjectInvitedStatus , memoryProjectInvitedCreateDate , memoryProjectInvitedUpdateDate , memoryProjectInvitedNo ) VALUES ( ? ,  ? ,  ? ,  ? ,  ? ,  ? )";
+final String sql = "INSERT INTO layout_setting(layoutSettingId,layoutTypeId , frameX , frameY , frameWidth , frameHeight , templateId ) VALUES ( ? ,  ? ,  ? ,  ? ,  ? ,  ? ,  ? )";
 try {
 conn = dataSource.getConnection();
-for (int i = 0; i < memory_project_invitedList.size() ; i++) {
-smt.setString(1, memory_project_invitedList.get(0).getMember().getMemoryProjectInvitedAccount());
-smt.setString(2, memory_project_invitedList.get(1).getMemoryProject().getMemoryProjectId());
-smt.setInt(3, memory_project_invitedList.get(2).getMemoryProjectInvitedStatus());
-smt.setString(6, memory_project_invitedList.get(5).getMemoryProjectInvitedNo());
+for (int i = 0; i < layoutSettingList.size() ; i++) {
+smt.setInt(1, layoutSettingList.get(0).getLayoutSettingId());
+smt.setInt(2, layoutSettingList.get(1).getLayoutType().getLayoutTypeId());
+smt.setInt(3, layoutSettingList.get(2).getFrameX());
+smt.setInt(4, layoutSettingList.get(3).getFrameY());
+smt.setInt(5, layoutSettingList.get(4).getFrameWidth());
+smt.setInt(6, layoutSettingList.get(5).getFrameHeight());
+smt.setInt(7, layoutSettingList.get(6).getTemplate().getTemplateId());
 smt.addBatch();
 }
 smt.executeBatch();
@@ -80,17 +87,21 @@ conn.close();
 }
 
 
-// update Memory_project_invited
-public void update(Memory_project_invited memory_project_invited,Memory_project_invited oldMemory_project_invited) {
+// update Layout_setting
+public void update(LayoutSetting layoutSetting,LayoutSetting oldLayoutSetting) {
 Connection conn = null ;
 PreparedStatement smt = null ;
-final String sql = "UPDATE memory_project_invited SET memoryProjectId = ? , memoryProjectInvitedStatus = ? , memoryProjectInvitedCreateDate = ? , memoryProjectInvitedUpdateDate = ? , memoryProjectInvitedNo = ?  WHERE memoryProjectInvitedAccount = ? ";
+final String sql = "UPDATE layout_setting SET layoutTypeId = ? , frameX = ? , frameY = ? , frameWidth = ? , frameHeight = ? , templateId = ?  WHERE layoutSettingId = ? ";
 try {
 conn = dataSource.getConnection();
-smt.setString(1, memory_project_invited.getMemoryProject().getMemoryProjectId()!=null?memory_project_invited.getMemoryProject().getMemoryProjectId():oldMemory_project_invited.getMemoryProject().getMemoryProjectId());
-smt.setInt(2, memory_project_invited.getMemoryProjectInvitedStatus()!=null?memory_project_invited.getMemoryProjectInvitedStatus():oldMemory_project_invited.getMemoryProjectInvitedStatus());
-smt.setString(5, memory_project_invited.getMemoryProjectInvitedNo()!=null?memory_project_invited.getMemoryProjectInvitedNo():oldMemory_project_invited.getMemoryProjectInvitedNo());
-smt.setString(6, memory_project_invited.getMember().getMemoryProjectInvitedAccount()!=null?memory_project_invited.getMember().getMemoryProjectInvitedAccount():oldMemory_project_invited.getMember().getMemoryProjectInvitedAccount());
+smt = conn.prepareStatement(sql);
+smt.setInt(1, layoutSetting.getLayoutType().getLayoutTypeId()!=null?layoutSetting.getLayoutType().getLayoutTypeId():oldLayoutSetting.getLayoutType().getLayoutTypeId());
+smt.setInt(2, layoutSetting.getFrameX()!=null?layoutSetting.getFrameX():oldLayoutSetting.getFrameX());
+smt.setInt(3, layoutSetting.getFrameY()!=null?layoutSetting.getFrameY():oldLayoutSetting.getFrameY());
+smt.setInt(4, layoutSetting.getFrameWidth()!=null?layoutSetting.getFrameWidth():oldLayoutSetting.getFrameWidth());
+smt.setInt(5, layoutSetting.getFrameHeight()!=null?layoutSetting.getFrameHeight():oldLayoutSetting.getFrameHeight());
+smt.setInt(6, layoutSetting.getTemplate().getTemplateId()!=null?layoutSetting.getTemplate().getTemplateId():oldLayoutSetting.getTemplate().getTemplateId());
+smt.setInt(7, layoutSetting.getLayoutSettingId()!=null?layoutSetting.getLayoutSettingId():oldLayoutSetting.getLayoutSettingId());
 smt.executeUpdate();
 smt.close();
 
@@ -108,15 +119,15 @@ conn.close();
 }
 
 
-// delete Memory_project_invited
-public void delete(Memory_project_invited memory_project_invited) {
+// delete Layout_setting
+public void delete(LayoutSetting layoutSetting) {
 Connection conn = null ;
 PreparedStatement smt = null ;
-final String sql = "DELETE FROM memory_project_invited WHERE memoryProjectInvitedAccount = ? ";
+final String sql = "DELETE FROM layout_setting WHERE layoutSettingId = ? ";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setString(1, memory_project_invited.getMember().getMemoryProjectInvitedAccount());
+smt.setInt(1, layoutSetting.getLayoutSettingId());
 smt.executeUpdate();
 smt.close();
 
@@ -134,22 +145,25 @@ conn.close();
 }
 
 
-// GET Memory_project_invited
-public Memory_project_invited get(Memory_project_invited memory_project_invited) {
+// GET Layout_setting
+public LayoutSetting get(LayoutSetting layoutSetting) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-final String sql = "SELECT a.memoryProjectInvitedAccount , a.memoryProjectId , a.memoryProjectInvitedStatus , a.memoryProjectInvitedCreateDate , a.memoryProjectInvitedUpdateDate , a.memoryProjectInvitedNo FROM memory_project_invited a WHERE a.memoryProjectInvitedAccount = ? ";
+final String sql = "SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.frameY , a.frameWidth , a.frameHeight , a.templateId FROM layout_setting a WHERE a.layoutSettingId = ? ";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setString(1, memory_project_invited.getMember().getMemoryProjectInvitedAccount());
+smt.setInt(1, layoutSetting.getLayoutSettingId());
 rs = smt.executeQuery();
 if(rs.next()){
-memory_project_invited.getMember().setMemoryProjectInvitedAccount(rs.getString("memoryProjectInvitedAccount"));
-memory_project_invited.getMemoryProject().setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project_invited.setMemoryProjectInvitedStatus(rs.getInt("memoryProjectInvitedStatus"));
-memory_project_invited.setMemoryProjectInvitedNo(rs.getString("memoryProjectInvitedNo"));
+layoutSetting.setLayoutSettingId(rs.getInt("layoutSettingId"));
+layoutSetting.getLayoutType().setLayoutTypeId(rs.getInt("layoutTypeId"));
+layoutSetting.setFrameX(rs.getInt("frameX"));
+layoutSetting.setFrameY(rs.getInt("frameY"));
+layoutSetting.setFrameWidth(rs.getInt("frameWidth"));
+layoutSetting.setFrameHeight(rs.getInt("frameHeight"));
+layoutSetting.getTemplate().setTemplateId(rs.getInt("templateId"));
 }
 rs.close();
 smt.close();
@@ -165,12 +179,12 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_project_invited;
+return layoutSetting;
 }
 
 
-// get_JoinBy Memory_project_invited
-public Memory_project_invited get_JoinByMemoryProjectInvitedAccount(Memory_project_invited memory_project_invited) {
+// get_JoinBy Layout_setting
+public LayoutSetting get_JoinByLayoutTypeId(LayoutSetting layoutSetting) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
@@ -178,13 +192,16 @@ final String sql = "[SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.fr
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setString(1, memory_project_invited.getMember().getMemoryProjectInvitedAccount());
+smt.setInt(1, layoutSetting.getLayoutSettingId());
 rs = smt.executeQuery();
 if(rs.next()){
-memory_project_invited.getMember().setMemoryProjectInvitedAccount(rs.getString("memoryProjectInvitedAccount"));
-memory_project_invited.getMemoryProject().setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project_invited.setMemoryProjectInvitedStatus(rs.getInt("memoryProjectInvitedStatus"));
-memory_project_invited.setMemoryProjectInvitedNo(rs.getString("memoryProjectInvitedNo"));
+layoutSetting.setLayoutSettingId(rs.getInt("layoutSettingId"));
+layoutSetting.getLayoutType().setLayoutTypeId(rs.getInt("layoutTypeId"));
+layoutSetting.setFrameX(rs.getInt("frameX"));
+layoutSetting.setFrameY(rs.getInt("frameY"));
+layoutSetting.setFrameWidth(rs.getInt("frameWidth"));
+layoutSetting.setFrameHeight(rs.getInt("frameHeight"));
+layoutSetting.getTemplate().setTemplateId(rs.getInt("templateId"));
 }
 rs.close();
 smt.close();
@@ -200,11 +217,11 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_project_invited;
+return layoutSetting;
 }
 
-// get_JoinBy Memory_project_invited
-public Memory_project_invited get_JoinByMemoryProjectId(Memory_project_invited memory_project_invited) {
+// get_JoinBy Layout_setting
+public LayoutSetting get_JoinByTemplateId(LayoutSetting layoutSetting) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
@@ -212,13 +229,16 @@ final String sql = "[SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.fr
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setString(1, memory_project_invited.getMember().getMemoryProjectInvitedAccount());
+smt.setInt(1, layoutSetting.getLayoutSettingId());
 rs = smt.executeQuery();
 if(rs.next()){
-memory_project_invited.getMember().setMemoryProjectInvitedAccount(rs.getString("memoryProjectInvitedAccount"));
-memory_project_invited.getMemoryProject().setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project_invited.setMemoryProjectInvitedStatus(rs.getInt("memoryProjectInvitedStatus"));
-memory_project_invited.setMemoryProjectInvitedNo(rs.getString("memoryProjectInvitedNo"));
+layoutSetting.setLayoutSettingId(rs.getInt("layoutSettingId"));
+layoutSetting.getLayoutType().setLayoutTypeId(rs.getInt("layoutTypeId"));
+layoutSetting.setFrameX(rs.getInt("frameX"));
+layoutSetting.setFrameY(rs.getInt("frameY"));
+layoutSetting.setFrameWidth(rs.getInt("frameWidth"));
+layoutSetting.setFrameHeight(rs.getInt("frameHeight"));
+layoutSetting.getTemplate().setTemplateId(rs.getInt("templateId"));
 }
 rs.close();
 smt.close();
@@ -234,18 +254,18 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_project_invited;
+return layoutSetting;
 }
 
 
 
-// getList Memory_project_invited
-public List<Memory_project_invited> getList(SqlUtil sqlUtil) {
+// getList Layout_setting
+public List<LayoutSetting> getList(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<Memory_project_invited> memory_project_invitedList = new ArrayList<Memory_project_invited>();
-final String sql = "SELECT a.memoryProjectInvitedAccount , a.memoryProjectId , a.memoryProjectInvitedStatus , a.memoryProjectInvitedCreateDate , a.memoryProjectInvitedUpdateDate , a.memoryProjectInvitedNo FROM memory_project_invited a "+
+List<LayoutSetting> layoutSettingList = new ArrayList<LayoutSetting>();
+final String sql = "SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.frameY , a.frameWidth , a.frameHeight , a.templateId FROM layout_setting a "+
 sqlUtil.getWhereGenerator().getWhereSql(true)+
 sqlUtil.getOrderGenerator().getOrderSql()+
 sqlUtil.getLimitGenerator().getLimitSql();
@@ -253,13 +273,16 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-Memory_project_invited memory_project_invited = new Memory_project_invited();
+LayoutSetting layoutSetting = new LayoutSetting();
 while(rs.next()){
-memory_project_invited = new Memory_project_invited();
-memory_project_invited.getMemoryProject().setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project_invited.setMemoryProjectInvitedStatus(rs.getInt("memoryProjectInvitedStatus"));
-memory_project_invited.setMemoryProjectInvitedNo(rs.getString("memoryProjectInvitedNo"));
-memory_project_invitedList.add(memory_project_invited);
+layoutSetting = new LayoutSetting();
+layoutSetting.setLayoutSettingId(rs.getInt("layoutSettingId"));
+layoutSetting.getLayoutType().setLayoutTypeId(rs.getInt("layoutTypeId"));
+layoutSetting.setFrameX(rs.getInt("frameX"));
+layoutSetting.setFrameY(rs.getInt("frameY"));
+layoutSetting.setFrameWidth(rs.getInt("frameWidth"));
+layoutSetting.setFrameHeight(rs.getInt("frameHeight"));
+layoutSettingList.add(layoutSetting);
 }
 rs.close();
 smt.close();
@@ -275,17 +298,17 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_project_invitedList;
+return layoutSettingList;
 }
 
 
-//Get List  Memory_project_invited
-public List<Memory_project_invited> getList_Join(SqlUtil sqlUtil) {
+//Get List  Layout_setting
+public List<LayoutSetting> getList_Join(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<Memory_project_invited> memory_project_invitedList = new ArrayList<Memory_project_invited>();
-final String sql = "SELECT a.memoryProjectInvitedAccount , a.memoryProjectId , a.memoryProjectInvitedStatus , a.memoryProjectInvitedCreateDate , a.memoryProjectInvitedUpdateDate , a.memoryProjectInvitedNo FROM memory_project_invited a  "+
+List<LayoutSetting> layoutSettingList = new ArrayList<LayoutSetting>();
+final String sql = "SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.frameY , a.frameWidth , a.frameHeight , a.templateId FROM layout_setting a  JOIN template b ON a.templateId = b.templateId "+
 sqlUtil.getWhereGenerator().getWhereSql(true)+
 sqlUtil.getOrderGenerator().getOrderSql()+
 sqlUtil.getLimitGenerator().getLimitSql();
@@ -293,13 +316,16 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-Memory_project_invited memory_project_invited = new Memory_project_invited();
+LayoutSetting layoutSetting = new LayoutSetting();
 while(rs.next()){
-memory_project_invited = new Memory_project_invited();
-memory_project_invited.getMemoryProject().setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project_invited.setMemoryProjectInvitedStatus(rs.getInt("memoryProjectInvitedStatus"));
-memory_project_invited.setMemoryProjectInvitedNo(rs.getString("memoryProjectInvitedNo"));
-memory_project_invitedList.add(memory_project_invited);
+layoutSetting = new LayoutSetting();
+layoutSetting.setLayoutSettingId(rs.getInt("layoutSettingId"));
+layoutSetting.getLayoutType().setLayoutTypeId(rs.getInt("layoutTypeId"));
+layoutSetting.setFrameX(rs.getInt("frameX"));
+layoutSetting.setFrameY(rs.getInt("frameY"));
+layoutSetting.setFrameWidth(rs.getInt("frameWidth"));
+layoutSetting.setFrameHeight(rs.getInt("frameHeight"));
+layoutSettingList.add(layoutSetting);
 }
 rs.close();
 smt.close();
@@ -315,18 +341,18 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_project_invitedList;
+return layoutSettingList;
 }
 
 
 
-// getList_JoinByFK  Memory_project_invited
-public List<Memory_project_invited> getList_JoinByMemoryProjectInvitedAccount(SqlUtil sqlUtil) {
+// getList_JoinByFK  Layout_setting
+public List<LayoutSetting> getList_JoinByLayoutTypeId(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<Memory_project_invited> memory_project_invitedList = new ArrayList<Memory_project_invited>();
-final String sql = "SELECT a.memoryProjectInvitedAccount , a.memoryProjectId , a.memoryProjectInvitedStatus , a.memoryProjectInvitedCreateDate , a.memoryProjectInvitedUpdateDate , a.memoryProjectInvitedNo FROM memory_project_invited a  WHRER b.memoryProjectInvitedAccount = ? "+
+List<LayoutSetting> layoutSettingList = new ArrayList<LayoutSetting>();
+final String sql = "SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.frameY , a.frameWidth , a.frameHeight , a.templateId FROM layout_setting a  JOIN template b ON a.templateId = b.templateId WHRER b.layoutTypeId = ? "+
 sqlUtil.getWhereGenerator().getWhereSql(false)+
 sqlUtil.getOrderGenerator().getOrderSql()+
 sqlUtil.getLimitGenerator().getLimitSql();
@@ -334,13 +360,16 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-Memory_project_invited memory_project_invited = new Memory_project_invited();
+LayoutSetting layoutSetting = new LayoutSetting();
 while(rs.next()){
-memory_project_invited = new Memory_project_invited();
-memory_project_invited.getMemoryProject().setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project_invited.setMemoryProjectInvitedStatus(rs.getInt("memoryProjectInvitedStatus"));
-memory_project_invited.setMemoryProjectInvitedNo(rs.getString("memoryProjectInvitedNo"));
-memory_project_invitedList.add(memory_project_invited);
+layoutSetting = new LayoutSetting();
+layoutSetting.setLayoutSettingId(rs.getInt("layoutSettingId"));
+layoutSetting.getLayoutType().setLayoutTypeId(rs.getInt("layoutTypeId"));
+layoutSetting.setFrameX(rs.getInt("frameX"));
+layoutSetting.setFrameY(rs.getInt("frameY"));
+layoutSetting.setFrameWidth(rs.getInt("frameWidth"));
+layoutSetting.setFrameHeight(rs.getInt("frameHeight"));
+layoutSettingList.add(layoutSetting);
 }
 rs.close();
 smt.close();
@@ -356,16 +385,16 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_project_invitedList;
+return layoutSettingList;
 }
 
-// getList_JoinByFK  Memory_project_invited
-public List<Memory_project_invited> getList_JoinByMemoryProjectId(SqlUtil sqlUtil) {
+// getList_JoinByFK  Layout_setting
+public List<LayoutSetting> getList_JoinByTemplateId(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<Memory_project_invited> memory_project_invitedList = new ArrayList<Memory_project_invited>();
-final String sql = "SELECT a.memoryProjectInvitedAccount , a.memoryProjectId , a.memoryProjectInvitedStatus , a.memoryProjectInvitedCreateDate , a.memoryProjectInvitedUpdateDate , a.memoryProjectInvitedNo FROM memory_project_invited a  WHRER b.memoryProjectId = ? "+
+List<LayoutSetting> layoutSettingList = new ArrayList<LayoutSetting>();
+final String sql = "SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.frameY , a.frameWidth , a.frameHeight , a.templateId FROM layout_setting a  JOIN template b ON a.templateId = b.templateId WHRER b.templateId = ? "+
 sqlUtil.getWhereGenerator().getWhereSql(false)+
 sqlUtil.getOrderGenerator().getOrderSql()+
 sqlUtil.getLimitGenerator().getLimitSql();
@@ -373,13 +402,16 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-Memory_project_invited memory_project_invited = new Memory_project_invited();
+LayoutSetting layoutSetting = new LayoutSetting();
 while(rs.next()){
-memory_project_invited = new Memory_project_invited();
-memory_project_invited.getMemoryProject().setMemoryProjectId(rs.getString("memoryProjectId"));
-memory_project_invited.setMemoryProjectInvitedStatus(rs.getInt("memoryProjectInvitedStatus"));
-memory_project_invited.setMemoryProjectInvitedNo(rs.getString("memoryProjectInvitedNo"));
-memory_project_invitedList.add(memory_project_invited);
+layoutSetting = new LayoutSetting();
+layoutSetting.setLayoutSettingId(rs.getInt("layoutSettingId"));
+layoutSetting.getLayoutType().setLayoutTypeId(rs.getInt("layoutTypeId"));
+layoutSetting.setFrameX(rs.getInt("frameX"));
+layoutSetting.setFrameY(rs.getInt("frameY"));
+layoutSetting.setFrameWidth(rs.getInt("frameWidth"));
+layoutSetting.setFrameHeight(rs.getInt("frameHeight"));
+layoutSettingList.add(layoutSetting);
 }
 rs.close();
 smt.close();
@@ -395,18 +427,18 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return memory_project_invitedList;
+return layoutSettingList;
 }
 
 
 
-//countTotal Memory_project_invited
+//countTotal Layout_setting
 public Integer countTotal() {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
 Integer countTotal = 0;
-final String sql = "SELECT COUNT(*) FROM memory_project_invited";
+final String sql = "SELECT COUNT(*) FROM layout_setting";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
@@ -432,13 +464,13 @@ return countTotal;
 }
 
 
-//countTotalList Memory_project_invited
+//countTotalList Layout_setting
 public Integer countTotal(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
 Integer countTotal = 0;
-final String sql = "SELECT COUNT(*) FROM memory_project_invited "+
+final String sql = "SELECT COUNT(*) FROM layout_setting "+
 sqlUtil.getWhereGenerator().getWhereSql(true)+
 sqlUtil.getOrderGenerator().getOrderSql()+
 sqlUtil.getLimitGenerator().getLimitSql();
@@ -467,8 +499,8 @@ return countTotal;
 }
 
 
-// countTotalList_JoinByFk Memory_project_invited
-public Integer countTotal_JoinByMemoryProjectInvitedAccount(SqlUtil sqlUtil) {
+// countTotalList_JoinByFk Layout_setting
+public Integer countTotal_JoinByLayoutTypeId(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
@@ -501,8 +533,8 @@ conn.close();
 return countTotal;
 }
 
-// countTotalList_JoinByFk Memory_project_invited
-public Integer countTotal_JoinByMemoryProjectId(SqlUtil sqlUtil) {
+// countTotalList_JoinByFk Layout_setting
+public Integer countTotal_JoinByTemplateId(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;

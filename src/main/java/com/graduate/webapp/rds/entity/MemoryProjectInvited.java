@@ -18,7 +18,7 @@ public class MemoryProjectInvited {
 		this.member = member;
 	}
 
-	public MemoryProject getmemoryProject() {
+	public MemoryProject getMemoryProject() {
 		return memoryProject;
 	}
 

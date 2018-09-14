@@ -24,8 +24,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 
-import com.graduate.webapp.rds.entity.MemoryProject;
-import com.graduate.webapp.rds.dao.Memory_projectDAO;
+import com.graduate.webapp.rds.entity.MemoryProjectInvited;
+import com.graduate.webapp.rds.dao.MemoryProjectInvitedDAO;
 import com.egroup.util.AttributeCheck;
 import com.egroup.util.CookieUtil;
 import com.egroup.util.entity.WebResponse;
@@ -37,18 +37,18 @@ import com.egroup.util.entity.EqualGenerator;
 import com.egroup.login.token.util.LoginUtil;
 import com.egroup.login.dynamoDB.entity.LoginToken;
 
-@Path("/memory_project")
+@Path("/memoryProjectInvited")
 @Controller
-public class Memory_projectRestController {
-private static Logger LOGGER = LoggerFactory.getLogger(Memory_projectRestController.class);
+public class MemoryProjectInvitedRestController {
+private static Logger LOGGER = LoggerFactory.getLogger(MemoryProjectInvitedRestController.class);
 final ApplicationContext context = new ClassPathXmlApplicationContext("spring-module-rds.xml");
 
 
 @POST
 @Consumes(MediaType.APPLICATION_JSON)
-public Response insert(MemoryProject memory_project, @Context HttpServletRequest request,@Context HttpServletResponse response) {
+public Response insert(MemoryProjectInvited memoryProject_invited, @Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Memory_projectDAO memory_projectDAO = (Memory_projectDAO) context.getBean("memory_projectDAO");
+final MemoryProjectInvitedDAO memoryProjectInvitedDAO = (MemoryProjectInvitedDAO) context.getBean("memoryProjectInvitedDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -60,8 +60,8 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-memory_projectDAO.insert(memory_project);
-webResponse.setData(memory_project);
+memoryProjectInvitedDAO.insert(memoryProjectInvited);
+webResponse.setData(memoryProjectInvited);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -74,9 +74,9 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 
 @PATCH
 @Consumes(MediaType.APPLICATION_JSON)
-public Response udpate(MemoryProject memory_project, @Context HttpServletRequest request,@Context HttpServletResponse response) {
+public Response udpate(MemoryProjectInvited memoryProjectInvited, @Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Memory_projectDAO memory_projectDAO = (Memory_projectDAO) context.getBean("memory_projectDAO");
+final MemoryProjectInvitedDAO memoryProjectInvitedDAO = (MemoryProjectInvitedDAO) context.getBean("memoryProjectInvitedDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -88,9 +88,9 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-final MemoryProject oldMemory_project = memory_projectDAO.get(memory_project);
-memory_projectDAO.update(memory_project,oldMemory_project);
-webResponse.setData(memory_project);
+final MemoryProjectInvited oldMemory_project_invited = memoryProjectInvitedDAO.get(memoryProjectInvited);
+memoryProjectInvitedDAO.update(memoryProjectInvited,oldMemory_project_invited);
+webResponse.setData(memoryProjectInvited);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -102,10 +102,10 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 
 
 @DELETE
-@Path("/{memoryProjectId}")
-public Response delete(@PathParam("memoryProjectId") String memoryProjectId,@Context HttpServletRequest request,@Context HttpServletResponse response) {
+@Path("/{memoryProjectInvitedAccount}")
+public Response delete(@PathParam("memoryProjectInvitedAccount") String memoryProjectInvitedAccount,@Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Memory_projectDAO memory_projectDAO = (Memory_projectDAO) context.getBean("memory_projectDAO");
+final MemoryProjectInvitedDAO memoryProjectInvitedDAO = (MemoryProjectInvitedDAO) context.getBean("memoryProjectInvitedDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -117,10 +117,10 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-final MemoryProject memory_project = new MemoryProject();
-memory_project.setMemoryProjectId(memoryProjectId);
-memory_projectDAO.delete(memory_project);
-webResponse.setData(memory_project);
+final MemoryProjectInvited memoryProjectInvited = new MemoryProjectInvited();
+memoryProjectInvited.getMember().setMemoryProjectInvitedAccount(memoryProjectInvitedAccount);
+memoryProjectInvitedDAO.delete(memoryProjectInvited);
+webResponse.setData(memoryProjectInvited);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -133,10 +133,10 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 
 @GET
 @GZIP
-@Path("/{memoryProjectId}")
-public Response get(@PathParam("memoryProjectId") String memoryProjectId,@Context HttpServletRequest request,@Context HttpServletResponse response) {
+@Path("/{memoryProjectInvitedAccount}")
+public Response get(@PathParam("memoryProjectInvitedAccount") String memoryProjectInvitedAccount,@Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Memory_projectDAO memory_projectDAO = (Memory_projectDAO) context.getBean("memory_projectDAO");
+final MemoryProjectInvitedDAO memory_project_invitedDAO = (MemoryProjectInvitedDAO) context.getBean("memoryProjectInvitedDAO");
 // init func
 final AttributeCheck attributeCheck = new AttributeCheck();
 final CookieUtil cookieUtil = new CookieUtil();
@@ -149,11 +149,11 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-MemoryProject memory_project = new MemoryProject();
-memory_project.setMemoryProjectId(memoryProjectId);
-memory_project = memory_projectDAO.get(memory_project);
-if(memory_project != null){
-webResponse.setData(memory_project);
+MemoryProjectInvited memoryProjectInvited = new MemoryProjectInvited();
+memoryProjectInvited.getMember().setMemoryProjectInvitedAccount(memoryProjectInvitedAccount);
+memoryProjectInvited = memory_project_invitedDAO.get(memoryProjectInvited);
+if(memoryProjectInvited != null){
+webResponse.setData(memoryProjectInvited);
 webResponse.OK();
 }else{
 webResponse.NOT_FOUND();
@@ -173,7 +173,7 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 @GZIP
 public Response list(@DefaultValue("0") @QueryParam("offset") Integer offset,@QueryParam("search")String search,@DefaultValue("10") @QueryParam("limit")Integer limit,@Context HttpServletRequest request, @Context HttpServletResponse response) {
 // init DAO
-final Memory_projectDAO memory_projectDAO = (Memory_projectDAO) context.getBean("memory_projectDAO");
+final MemoryProjectInvitedDAO memoryProjectInvitedDAO = (MemoryProjectInvitedDAO) context.getBean("memoryProjectInvitedDAO");
 // init func
 final AttributeCheck attributeCheck = new AttributeCheck();
 final CookieUtil cookieUtil = new CookieUtil();
@@ -201,8 +201,8 @@ sqlUtil.getOrderGenerator().setAsc(false);
 // sqlUtil.getWhereGenerator().getEqualGenerator().setEqualHashMap("a.organizationId", organizationId);
 
 // Get List By SqlUtil
-List<MemoryProject> memory_projectList = memory_projectDAO.getList(sqlUtil);
-webResponse.setData(memory_projectList);
+List<MemoryProjectInvited> memoryProjectInvitedList = memoryProjectInvitedDAO.getList(sqlUtil);
+webResponse.setData(memoryProjectInvitedList);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -216,9 +216,9 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 @GET
 @Path("/list")
 @GZIP
-public Response listCount(@QueryParam("search")String search,@Context HttpServletRequest request, @Context HttpServletResponse response) {
+public Response listCount(@QueryParam("search")String search,@Context HttpServletRequest request, @Context HttpServletResponse response, Integer offset, Integer limit) {
 // init DAO
-final Memory_projectDAO memory_projectDAO = (Memory_projectDAO) context.getBean("memory_projectDAO");
+final MemoryProjectInvitedDAO memoryProjectInvitedDAO = (MemoryProjectInvitedDAO) context.getBean("memoryProjectInvitedDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -245,7 +245,96 @@ sqlUtil.getOrderGenerator().setAsc(false);
 // sqlUtil.getWhereGenerator().getEqualGenerator().setEqualHashMap("a.organizationId", organizationId);
 
 // Get ListCount By SqlUtil
-final int countTotal = memory_projectDAO.countTotal(sqlUtil);
+final int countTotal = memoryProjectInvitedDAO.countTotal(sqlUtil);
+webResponse.setData(countTotal);
+webResponse.OK();
+}else{
+webResponse.getError().setMessage("Authentication failed");
+webResponse.setData(webResponse.getError());
+webResponse.UNPROCESSABLE_ENTITY();
+}
+return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()).build();
+}
+
+
+@GET
+@Path("member/list/{memoryProjectInvitedAccount}")
+@GZIP
+public Response list_ByMemoryProjectInvitedAccount(@PathParam("memoryProjectInvitedAccount") String memoryProjectInvitedAccount ,@DefaultValue("0") @QueryParam("offset") Integer offset,@DefaultValue("10") @QueryParam("limit")Integer limit,@QueryParam("search")String search,@Context HttpServletRequest request, @Context HttpServletResponse response) {
+// init DAO
+final MemoryProjectInvitedDAO memoryProjectInvitedDAO = (MemoryProjectInvitedDAO) context.getBean("memoryProjectInvitedDAO");
+// init func
+final AttributeCheck attributeCheck = new AttributeCheck();
+final CookieUtil cookieUtil = new CookieUtil();
+// init variable
+final WebResponse webResponse = new WebResponse();
+final String loginID = cookieUtil.getCookie(request, "lid");
+final String tokenID = cookieUtil.getCookie(request, "tid");
+// Check login token
+final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
+final LoginToken loginToken = loginUtil.checkLogin();
+// verify loginToken
+if (loginUtil.controllerValid(loginToken)) {
+// init variable
+final SqlUtil sqlUtil = new SqlUtil();
+// init limitSQL
+sqlUtil.getLimitGenerator().setOffset(offset);
+sqlUtil.getLimitGenerator().setLimit(limit);
+// init likeSQL
+sqlUtil.getWhereGenerator().getLikeGenerator().getLikeFieldList().add("");
+sqlUtil.getWhereGenerator().getLikeGenerator().setLike(search);
+// init orderSQL
+sqlUtil.getOrderGenerator().setOrder("");
+sqlUtil.getOrderGenerator().setAsc(false);
+// init equalSQL
+// sqlUtil.getWhereGenerator().getEqualGenerator().setEqualHashMap("", );
+
+// Get List By SqlUtil
+List<MemoryProjectInvited> memoryProjectInvitedList = memoryProjectInvitedDAO.getList_JoinByMemoryProjectInvitedAccount(sqlUtil);
+webResponse.setData(memoryProjectInvitedList);
+webResponse.OK();
+}else{
+webResponse.getError().setMessage("Authentication failed");
+webResponse.setData(webResponse.getError());
+webResponse.UNPROCESSABLE_ENTITY();
+}
+return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()).build();
+}
+
+
+@GET
+@Path("member/list/{memoryProjectInvitedAccount}")
+@GZIP
+public Response listCount_ByMemoryProjectInvitedAccount(@PathParam("memoryProjectInvitedAccount") String memoryProjectInvitedAccount ,@DefaultValue("0") @QueryParam("offset") Integer offset,@DefaultValue("10") @QueryParam("limit")Integer limit,@QueryParam("search")String search,@Context HttpServletRequest request, @Context HttpServletResponse response) {
+// init DAO
+final MemoryProjectInvitedDAO memoryProjectInvitedDAO = (MemoryProjectInvitedDAO) context.getBean("memoryProjectInvitedDAO");
+// init func
+final CookieUtil cookieUtil = new CookieUtil();
+// init variable
+final WebResponse webResponse = new WebResponse();
+final String loginID = cookieUtil.getCookie(request, "lid");
+final String tokenID = cookieUtil.getCookie(request, "tid");
+// Check login token
+final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
+final LoginToken loginToken = loginUtil.checkLogin();
+// verify loginToken
+if (loginUtil.controllerValid(loginToken)) {
+// init variable
+final SqlUtil sqlUtil = new SqlUtil();
+// init limitSQL
+sqlUtil.getLimitGenerator().setOffset(offset);
+sqlUtil.getLimitGenerator().setLimit(limit);
+// init likeSQL
+sqlUtil.getWhereGenerator().getLikeGenerator().getLikeFieldList().add("");
+sqlUtil.getWhereGenerator().getLikeGenerator().setLike(search);
+// init orderSQL
+sqlUtil.getOrderGenerator().setOrder("");
+sqlUtil.getOrderGenerator().setAsc(false);
+// init equalSQL
+// sqlUtil.getWhereGenerator().getEqualGenerator().setEqualHashMap("", );
+
+// Get ListCount By SqlUtil
+final int countTotal = memoryProjectInvitedDAO.countTotal_JoinByMemoryProjectInvitedAccount(sqlUtil);
 webResponse.setData(countTotal);
 webResponse.OK();
 }else{

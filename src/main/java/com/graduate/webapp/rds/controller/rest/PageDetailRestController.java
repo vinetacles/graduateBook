@@ -24,8 +24,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 
-import com.graduate.webapp.rds.entity.Memory_book;
-import com.graduate.webapp.rds.dao.Memory_bookDAO;
+import com.graduate.webapp.rds.entity.PageDetail;
+import com.graduate.webapp.rds.dao.PageDetailDAO;
 import com.egroup.util.AttributeCheck;
 import com.egroup.util.CookieUtil;
 import com.egroup.util.entity.WebResponse;
@@ -37,18 +37,18 @@ import com.egroup.util.entity.EqualGenerator;
 import com.egroup.login.token.util.LoginUtil;
 import com.egroup.login.dynamoDB.entity.LoginToken;
 
-@Path("/memory_book")
+@Path("/pageDetail")
 @Controller
-public class Memory_bookRestController {
-private static Logger LOGGER = LoggerFactory.getLogger(Memory_bookRestController.class);
+public class PageDetailRestController {
+private static Logger LOGGER = LoggerFactory.getLogger(PageDetailRestController.class);
 final ApplicationContext context = new ClassPathXmlApplicationContext("spring-module-rds.xml");
 
 
 @POST
 @Consumes(MediaType.APPLICATION_JSON)
-public Response insert(Memory_book memory_book, @Context HttpServletRequest request,@Context HttpServletResponse response) {
+public Response insert(PageDetail pageDetail, @Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Memory_bookDAO memory_bookDAO = (Memory_bookDAO) context.getBean("memory_bookDAO");
+final PageDetailDAO pageDetailDAO = (PageDetailDAO) context.getBean("pageDetailDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -60,8 +60,8 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-memory_bookDAO.insert(memory_book);
-webResponse.setData(memory_book);
+pageDetailDAO.insert(pageDetail);
+webResponse.setData(pageDetail);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -74,9 +74,9 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 
 @PATCH
 @Consumes(MediaType.APPLICATION_JSON)
-public Response udpate(Memory_book memory_book, @Context HttpServletRequest request,@Context HttpServletResponse response) {
+public Response udpate(PageDetail pageDetail, @Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Memory_bookDAO memory_bookDAO = (Memory_bookDAO) context.getBean("memory_bookDAO");
+final PageDetailDAO pageDetailDAO = (PageDetailDAO) context.getBean("pageDetailDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -88,9 +88,9 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-final Memory_book oldMemory_book = memory_bookDAO.get(memory_book);
-memory_bookDAO.update(memory_book,oldMemory_book);
-webResponse.setData(memory_book);
+final PageDetail oldPageDetail = pageDetailDAO.get(pageDetail);
+pageDetailDAO.update(pageDetail,oldPageDetail);
+webResponse.setData(page_detail);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -102,10 +102,10 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 
 
 @DELETE
-@Path("/{memoryBookId}")
-public Response delete(@PathParam("memoryBookId") Integer memoryBookId,@Context HttpServletRequest request,@Context HttpServletResponse response) {
+@Path("/{pageDetailId}")
+public Response delete(@PathParam("pageDetailId") Integer pageDetailId,@Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Memory_bookDAO memory_bookDAO = (Memory_bookDAO) context.getBean("memory_bookDAO");
+final PageDetailDAO pageDetailDAO = (PageDetailDAO) context.getBean("pageDetailDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -117,10 +117,10 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-final Memory_book memory_book = new Memory_book();
-memory_book.setMemoryBookId(memoryBookId);
-memory_bookDAO.delete(memory_book);
-webResponse.setData(memory_book);
+final PageDetail pageDetail = new PageDetail();
+pageDetail.setPageDetailId(pageDetailId);
+pageDetailDAO.delete(pageDetail);
+webResponse.setData(pageDetail);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -133,10 +133,10 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 
 @GET
 @GZIP
-@Path("/{memoryBookId}")
-public Response get(@PathParam("memoryBookId") Integer memoryBookId,@Context HttpServletRequest request,@Context HttpServletResponse response) {
+@Path("/{pageDetailId}")
+public Response get(@PathParam("pageDetailId") Integer pageDetailId,@Context HttpServletRequest request,@Context HttpServletResponse response) {
 // init DAO
-final Memory_bookDAO memory_bookDAO = (Memory_bookDAO) context.getBean("memory_bookDAO");
+final PageDetailDAO pageDetailDAO = (PageDetailDAO) context.getBean("pageDetailDAO");
 // init func
 final AttributeCheck attributeCheck = new AttributeCheck();
 final CookieUtil cookieUtil = new CookieUtil();
@@ -149,11 +149,11 @@ final LoginUtil loginUtil = new LoginUtil(request, response, loginID, tokenID);
 final LoginToken loginToken = loginUtil.checkLogin();
 // verify loginToken
 if (loginUtil.controllerValid(loginToken)) {
-Memory_book memory_book = new Memory_book();
-memory_book.setMemoryBookId(memoryBookId);
-memory_book = memory_bookDAO.get(memory_book);
-if(memory_book != null){
-webResponse.setData(memory_book);
+PageDetail pageDetail = new PageDetail();
+pageDetail.setPageDetailId(pageDetailId);
+pageDetail = pageDetailDAO.get(pageDetail);
+if(pageDetail != null){
+webResponse.setData(pageDetail);
 webResponse.OK();
 }else{
 webResponse.NOT_FOUND();
@@ -173,7 +173,7 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 @GZIP
 public Response list(@DefaultValue("0") @QueryParam("offset") Integer offset,@QueryParam("search")String search,@DefaultValue("10") @QueryParam("limit")Integer limit,@Context HttpServletRequest request, @Context HttpServletResponse response) {
 // init DAO
-final Memory_bookDAO memory_bookDAO = (Memory_bookDAO) context.getBean("memory_bookDAO");
+final PageDetailDAO page_detailDAO = (PageDetailDAO) context.getBean("pageDetailDAO");
 // init func
 final AttributeCheck attributeCheck = new AttributeCheck();
 final CookieUtil cookieUtil = new CookieUtil();
@@ -201,8 +201,8 @@ sqlUtil.getOrderGenerator().setAsc(false);
 // sqlUtil.getWhereGenerator().getEqualGenerator().setEqualHashMap("a.organizationId", organizationId);
 
 // Get List By SqlUtil
-List<Memory_book> memory_bookList = memory_bookDAO.getList(sqlUtil);
-webResponse.setData(memory_bookList);
+List<PageDetail> pageDetailList = pageDetailDAO.getList(sqlUtil);
+webResponse.setData(pageDetailList);
 webResponse.OK();
 }else{
 webResponse.getError().setMessage("Authentication failed");
@@ -216,9 +216,9 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 @GET
 @Path("/list")
 @GZIP
-public Response listCount(@QueryParam("search")String search,@Context HttpServletRequest request, @Context HttpServletResponse response) {
+public Response listCount(@QueryParam("search")String search,@Context HttpServletRequest request, @Context HttpServletResponse response, Integer offset, Integer limit) {
 // init DAO
-final Memory_bookDAO memory_bookDAO = (Memory_bookDAO) context.getBean("memory_bookDAO");
+final PageDetailDAO page_detailDAO = (PageDetailDAO) context.getBean("pageDetailDAO");
 // init func
 final CookieUtil cookieUtil = new CookieUtil();
 // init variable
@@ -245,7 +245,7 @@ sqlUtil.getOrderGenerator().setAsc(false);
 // sqlUtil.getWhereGenerator().getEqualGenerator().setEqualHashMap("a.organizationId", organizationId);
 
 // Get ListCount By SqlUtil
-final int countTotal = memory_bookDAO.countTotal(sqlUtil);
+final int countTotal = pageDetailDAO.countTotal(sqlUtil);
 webResponse.setData(countTotal);
 webResponse.OK();
 }else{

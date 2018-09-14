@@ -2,10 +2,10 @@ package com.graduate.webapp.rds.entity;
 
 import java.sql.Date;
 
-public class Layout_setting {
+public class LayoutSetting {
 // Database Column
 private Integer layoutSettingId;
-private Layout_type layout_type = new Layout_type();
+private LayoutType layoutType = new LayoutType();
 private Integer frameX;
 private Integer frameY;
 private Integer frameWidth;
@@ -20,11 +20,11 @@ public void setLayoutSettingId(Integer layoutSettingId) {
 this.layoutSettingId = layoutSettingId;
 }
 
-public Layout_type getLayout_type() {
-return layout_type;
+public LayoutType getLayoutType() {
+return layoutType;
 }
-public void setLayout_type(Layout_type layout_type) {
-this.layout_type = layout_type;
+public void setLayoutType(LayoutType layoutType) {
+this.layoutType = layoutType;
 }
 
 public Integer getFrameX() {

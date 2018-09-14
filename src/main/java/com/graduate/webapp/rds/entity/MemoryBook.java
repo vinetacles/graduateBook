@@ -2,12 +2,12 @@ package com.graduate.webapp.rds.entity;
 
 import java.sql.Date;
 
-public class Memory_book {
+public class MemoryBook {
 // Database Column
 private Integer memoryBookId;
 private String memoryBookName;
 private Member member = new Member();
-private MemoryProject memory_project = new MemoryProject();
+private MemoryProject memoryProject = new MemoryProject();
 private Template template = new Template();
 private Integer memoryBookStatusId;
 // Program control
@@ -33,11 +33,11 @@ public void setMember(Member member) {
 this.member = member;
 }
 
-public MemoryProject getMemory_project() {
-return memory_project;
+public MemoryProject getMemoryProject() {
+return memoryProject;
 }
-public void setMemory_project(MemoryProject memory_project) {
-this.memory_project = memory_project;
+public void setMemoryProject(MemoryProject memoryProject) {
+this.memoryProject = memoryProject;
 }
 
 public Template getTemplate() {

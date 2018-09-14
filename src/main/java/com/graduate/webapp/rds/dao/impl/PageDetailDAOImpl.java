@@ -11,27 +11,27 @@ import com.egroup.util.SqlUtil;
 
 import javax.sql.DataSource;
 
-import com.graduate.webapp.rds.dao.Page_detailDAO;
-import com.graduate.webapp.rds.entity.Page_detail;
+import com.graduate.webapp.rds.dao.PageDetailDAO;
+import com.graduate.webapp.rds.entity.PageDetail;
 
-public class Page_detailDAOImpl implements Page_detailDAO{
+public class PageDetailDAOImpl implements PageDetailDAO{
 private DataSource dataSource;
 
 public void setDataSource(DataSource dataSource) {
 this.dataSource = dataSource;
 }
 // insert Page_detail
-public void insert(Page_detail page_detail) {
+public void insert(PageDetail pageDetail) {
 Connection conn = null ;
 PreparedStatement smt = null ;
-final String sql = "INSERT INTO page_detail(pageDetailId,pageId , photoId , layoutSettingId ) VALUES ( ? ,  ? ,  ? ,  ? )";
+final String sql = "INSERT INTO pageDetail(pageDetailId,pageId , photoId , layoutSettingId ) VALUES ( ? ,  ? ,  ? ,  ? )";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, page_detail.getPageDetailId());
-smt.setInt(2, page_detail.getPage().getPageId());
-smt.setInt(3, page_detail.getPhoto().getPhotoId());
-smt.setInt(4, page_detail.getLayoutSetting().getLayoutSettingId());
+smt.setInt(1, pageDetail.getPageDetailId());
+smt.setInt(2, pageDetail.getPage().getPageId());
+smt.setInt(3, pageDetail.getPhoto().getPhotoId());
+smt.setInt(4, pageDetail.getLayoutSetting().getLayoutSettingId());
 smt.executeUpdate();
 smt.close();
 
@@ -49,18 +49,18 @@ conn.close();
 }
 
 
-// insert Page_detail
-public void insert(List<Page_detail> page_detailList) {
+// insert PageDetail
+public void insert(List<PageDetail> pageDetailList) {
 Connection conn = null ;
 PreparedStatement smt = null ;
 final String sql = "INSERT INTO page_detail(pageDetailId,pageId , photoId , layoutSettingId ) VALUES ( ? ,  ? ,  ? ,  ? )";
 try {
 conn = dataSource.getConnection();
-for (int i = 0; i < page_detailList.size() ; i++) {
-smt.setInt(1, page_detailList.get(0).getPageDetailId());
-smt.setInt(2, page_detailList.get(1).getPage().getPageId());
-smt.setInt(3, page_detailList.get(2).getPhoto().getPhotoId());
-smt.setInt(4, page_detailList.get(3).getLayoutSetting().getLayoutSettingId());
+for (int i = 0; i < pageDetailList.size() ; i++) {
+smt.setInt(1, pageDetailList.get(0).getPageDetailId());
+smt.setInt(2, pageDetailList.get(1).getPage().getPageId());
+smt.setInt(3, pageDetailList.get(2).getPhoto().getPhotoId());
+smt.setInt(4, pageDetailList.get(3).getLayoutSetting().getLayoutSettingId());
 smt.addBatch();
 }
 smt.executeBatch();
@@ -80,18 +80,18 @@ conn.close();
 }
 
 
-// update Page_detail
-public void update(Page_detail page_detail,Page_detail oldPage_detail) {
+// update PageDetail
+public void update(PageDetail pageDetail,PageDetail oldPageDetail) {
 Connection conn = null ;
 PreparedStatement smt = null ;
 final String sql = "UPDATE page_detail SET pageId = ? , photoId = ? , layoutSettingId = ?  WHERE pageDetailId = ? ";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, page_detail.getPage().getPageId()!=null?page_detail.getPage().getPageId():oldPage_detail.getPage().getPageId());
-smt.setInt(2, page_detail.getPhoto().getPhotoId()!=null?page_detail.getPhoto().getPhotoId():oldPage_detail.getPhoto().getPhotoId());
-smt.setInt(3, page_detail.getLayoutSetting().getLayoutSettingId()!=null?page_detail.getLayoutSetting().getLayoutSettingId():oldPage_detail.getLayoutSetting().getLayoutSettingId());
-smt.setInt(4, page_detail.getPageDetailId()!=null?page_detail.getPageDetailId():oldPage_detail.getPageDetailId());
+smt.setInt(1, pageDetail.getPage().getPageId()!=null?pageDetail.getPage().getPageId():oldPageDetail.getPage().getPageId());
+smt.setInt(2, pageDetail.getPhoto().getPhotoId()!=null?pageDetail.getPhoto().getPhotoId():oldPageDetail.getPhoto().getPhotoId());
+smt.setInt(3, pageDetail.getLayoutSetting().getLayoutSettingId()!=null?pageDetail.getLayoutSetting().getLayoutSettingId():oldPageDetail.getLayoutSetting().getLayoutSettingId());
+smt.setInt(4, pageDetail.getPageDetailId()!=null?pageDetail.getPageDetailId():oldPageDetail.getPageDetailId());
 smt.executeUpdate();
 smt.close();
 
@@ -109,15 +109,15 @@ conn.close();
 }
 
 
-// delete Page_detail
-public void delete(Page_detail page_detail) {
+// delete PageDetail
+public void delete(PageDetail pageDetail) {
 Connection conn = null ;
 PreparedStatement smt = null ;
 final String sql = "DELETE FROM page_detail WHERE pageDetailId = ? ";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, page_detail.getPageDetailId());
+smt.setInt(1, pageDetail.getPageDetailId());
 smt.executeUpdate();
 smt.close();
 
@@ -136,7 +136,7 @@ conn.close();
 
 
 // GET Page_detail
-public Page_detail get(Page_detail page_detail) {
+public PageDetail get(PageDetail pageDetail) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
@@ -144,13 +144,13 @@ final String sql = "SELECT a.pageDetailId , a.pageId , a.photoId , a.layoutSetti
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, page_detail.getPageDetailId());
+smt.setInt(1, pageDetail.getPageDetailId());
 rs = smt.executeQuery();
 if(rs.next()){
-page_detail.setPageDetailId(rs.getInt("pageDetailId"));
-page_detail.getPage().setPageId(rs.getInt("pageId"));
-page_detail.getPhoto().setPhotoId(rs.getInt("photoId"));
-page_detail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
+pageDetail.setPageDetailId(rs.getInt("pageDetailId"));
+pageDetail.getPage().setPageId(rs.getInt("pageId"));
+pageDetail.getPhoto().setPhotoId(rs.getInt("photoId"));
+pageDetail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
 }
 rs.close();
 smt.close();
@@ -166,12 +166,12 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return page_detail;
+return pageDetail;
 }
 
 
-// get_JoinBy Page_detail
-public Page_detail get_JoinByPageId(Page_detail page_detail) {
+// get_JoinBy PageDetail
+public PageDetail get_JoinByPageId(PageDetail pageDetail) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
@@ -179,13 +179,13 @@ final String sql = "[SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.fr
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, page_detail.getPageDetailId());
+smt.setInt(1, pageDetail.getPageDetailId());
 rs = smt.executeQuery();
 if(rs.next()){
-page_detail.setPageDetailId(rs.getInt("pageDetailId"));
-page_detail.getPage().setPageId(rs.getInt("pageId"));
-page_detail.getPhoto().setPhotoId(rs.getInt("photoId"));
-page_detail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
+pageDetail.setPageDetailId(rs.getInt("pageDetailId"));
+pageDetail.getPage().setPageId(rs.getInt("pageId"));
+pageDetail.getPhoto().setPhotoId(rs.getInt("photoId"));
+pageDetail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
 }
 rs.close();
 smt.close();
@@ -201,11 +201,11 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return page_detail;
+return pageDetail;
 }
 
 // get_JoinBy Page_detail
-public Page_detail get_JoinByPhotoId(Page_detail page_detail) {
+public PageDetail get_JoinByPhotoId(PageDetail pageDetail) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
@@ -213,13 +213,13 @@ final String sql = "[SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.fr
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, page_detail.getPageDetailId());
+smt.setInt(1, pageDetail.getPageDetailId());
 rs = smt.executeQuery();
 if(rs.next()){
-page_detail.setPageDetailId(rs.getInt("pageDetailId"));
-page_detail.getPage().setPageId(rs.getInt("pageId"));
-page_detail.getPhoto().setPhotoId(rs.getInt("photoId"));
-page_detail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
+pageDetail.setPageDetailId(rs.getInt("pageDetailId"));
+pageDetail.getPage().setPageId(rs.getInt("pageId"));
+pageDetail.getPhoto().setPhotoId(rs.getInt("photoId"));
+pageDetail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
 }
 rs.close();
 smt.close();
@@ -235,11 +235,11 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return page_detail;
+return pageDetail;
 }
 
 // get_JoinBy Page_detail
-public Page_detail get_JoinByLayoutSettingId(Page_detail page_detail) {
+public PageDetail get_JoinByLayoutSettingId(PageDetail pageDetail) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
@@ -247,13 +247,13 @@ final String sql = "[SELECT a.layoutSettingId , a.layoutTypeId , a.frameX , a.fr
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, page_detail.getPageDetailId());
+smt.setInt(1, pageDetail.getPageDetailId());
 rs = smt.executeQuery();
 if(rs.next()){
-page_detail.setPageDetailId(rs.getInt("pageDetailId"));
-page_detail.getPage().setPageId(rs.getInt("pageId"));
-page_detail.getPhoto().setPhotoId(rs.getInt("photoId"));
-page_detail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
+pageDetail.setPageDetailId(rs.getInt("pageDetailId"));
+pageDetail.getPage().setPageId(rs.getInt("pageId"));
+pageDetail.getPhoto().setPhotoId(rs.getInt("photoId"));
+pageDetail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
 }
 rs.close();
 smt.close();
@@ -269,17 +269,17 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return page_detail;
+return pageDetail;
 }
 
 
 
 // getList Page_detail
-public List<Page_detail> getList(SqlUtil sqlUtil) {
+public List<PageDetail> getList(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<Page_detail> page_detailList = new ArrayList<Page_detail>();
+List<PageDetail> pageDetailList = new ArrayList<PageDetail>();
 final String sql = "SELECT a.pageDetailId , a.pageId , a.photoId , a.layoutSettingId FROM page_detail a "+
 sqlUtil.getWhereGenerator().getWhereSql(true)+
 sqlUtil.getOrderGenerator().getOrderSql()+
@@ -288,12 +288,12 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-Page_detail page_detail = new Page_detail();
+PageDetail pageDetail = new PageDetail();
 while(rs.next()){
-page_detail = new Page_detail();
-page_detail.setPageDetailId(rs.getInt("pageDetailId"));
-page_detail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
-page_detailList.add(page_detail);
+pageDetail = new PageDetail();
+pageDetail.setPageDetailId(rs.getInt("pageDetailId"));
+pageDetail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
+pageDetailList.add(pageDetail);
 }
 rs.close();
 smt.close();
@@ -309,16 +309,16 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return page_detailList;
+return pageDetailList;
 }
 
 
-//Get List  Page_detail
-public List<Page_detail> getList_Join(SqlUtil sqlUtil) {
+//Get List  PageDetail
+public List<PageDetail> getList_Join(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<Page_detail> page_detailList = new ArrayList<Page_detail>();
+List<PageDetail> pageDetailList = new ArrayList<PageDetail>();
 final String sql = "SELECT a.pageDetailId , a.pageId , a.photoId , a.layoutSettingId FROM page_detail a  JOIN layout_setting b ON a.layoutSettingId = b.layoutSettingId "+
 sqlUtil.getWhereGenerator().getWhereSql(true)+
 sqlUtil.getOrderGenerator().getOrderSql()+
@@ -327,12 +327,12 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-Page_detail page_detail = new Page_detail();
+PageDetail pageDetail = new PageDetail();
 while(rs.next()){
-page_detail = new Page_detail();
-page_detail.setPageDetailId(rs.getInt("pageDetailId"));
-page_detail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
-page_detailList.add(page_detail);
+pageDetail = new PageDetail();
+pageDetail.setPageDetailId(rs.getInt("pageDetailId"));
+pageDetail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
+pageDetailList.add(pageDetail);
 }
 rs.close();
 smt.close();
@@ -348,7 +348,7 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return page_detailList;
+return pageDetailList;
 }
 
 
@@ -392,11 +392,11 @@ return page_detailList;
 }
 
 // getList_JoinByFK  Page_detail
-public List<Page_detail> getList_JoinByPhotoId(SqlUtil sqlUtil) {
+public List<PageDetail> getList_JoinByPhotoId(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<Page_detail> page_detailList = new ArrayList<Page_detail>();
+List<PageDetail> pageDetailList = new ArrayList<PageDetail>();
 final String sql = "SELECT a.pageDetailId , a.pageId , a.photoId , a.layoutSettingId FROM page_detail a  JOIN layout_setting b ON a.layoutSettingId = b.layoutSettingId WHRER b.photoId = ? "+
 sqlUtil.getWhereGenerator().getWhereSql(false)+
 sqlUtil.getOrderGenerator().getOrderSql()+
@@ -405,12 +405,12 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-Page_detail page_detail = new Page_detail();
+PageDetail pageDetail = new PageDetail();
 while(rs.next()){
-page_detail = new Page_detail();
-page_detail.setPageDetailId(rs.getInt("pageDetailId"));
-page_detail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
-page_detailList.add(page_detail);
+pageDetail = new PageDetail();
+pageDetail.setPageDetailId(rs.getInt("pageDetailId"));
+pageDetail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
+pageDetailList.add(pageDetail);
 }
 rs.close();
 smt.close();
@@ -426,15 +426,15 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return page_detailList;
+return pageDetailList;
 }
 
-// getList_JoinByFK  Page_detail
-public List<Page_detail> getList_JoinByLayoutSettingId(SqlUtil sqlUtil) {
+// getList_JoinByFK  PageDetail
+public List<PageDetail> getList_JoinByLayoutSettingId(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<Page_detail> page_detailList = new ArrayList<Page_detail>();
+List<PageDetail> pageDetailList = new ArrayList<PageDetail>();
 final String sql = "SELECT a.pageDetailId , a.pageId , a.photoId , a.layoutSettingId FROM page_detail a  JOIN layout_setting b ON a.layoutSettingId = b.layoutSettingId WHRER b.layoutSettingId = ? "+
 sqlUtil.getWhereGenerator().getWhereSql(false)+
 sqlUtil.getOrderGenerator().getOrderSql()+
@@ -443,12 +443,12 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-Page_detail page_detail = new Page_detail();
+PageDetail pageDetail = new PageDetail();
 while(rs.next()){
-page_detail = new Page_detail();
-page_detail.setPageDetailId(rs.getInt("pageDetailId"));
-page_detail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
-page_detailList.add(page_detail);
+pageDetail = new PageDetail();
+pageDetail.setPageDetailId(rs.getInt("pageDetailId"));
+pageDetail.getLayoutSetting().setLayoutSettingId(rs.getInt("layoutSettingId"));
+pageDetailList.add(pageDetail);
 }
 rs.close();
 smt.close();
@@ -464,7 +464,7 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return page_detailList;
+return pageDetailList;
 }
 
 

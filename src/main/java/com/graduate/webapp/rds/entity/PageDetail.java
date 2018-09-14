@@ -2,12 +2,12 @@ package com.graduate.webapp.rds.entity;
 
 import java.sql.Date;
 
-public class Page_detail {
+public class PageDetail {
 // Database Column
 private Integer pageDetailId;
 private Page page = new Page();
 private Photo photo = new Photo();
-private Layout_setting layout_setting = new Layout_setting();
+private LayoutSetting layoutSetting = new LayoutSetting();
 // Program control
 
 public Integer getPageDetailId() {
@@ -31,11 +31,11 @@ public void setPhoto(Photo photo) {
 this.photo = photo;
 }
 
-public Layout_setting getLayout_setting() {
-return layout_setting;
+public LayoutSetting getLayoutSetting() {
+return layoutSetting;
 }
-public void setLayout_setting(Layout_setting layout_setting) {
-this.layout_setting = layout_setting;
+public void setLayout_setting(LayoutSetting layoutSetting) {
+this.layoutSetting = layoutSetting;
 }
 
 }

@@ -8,7 +8,7 @@ public class WhereGenerator {
 	private LikeGenerator likeGenerator = new LikeGenerator();
 	private EqualGenerator equalGenerator = new EqualGenerator();
 
-	public String getWhereSql() {
+	public String getWhereSql(boolean b) {
 		final String likeSql = likeGenerator.getLikeSql();
 		final String equalSql = equalGenerator.getEqualSql();
 		if (attributeCheck.stringsNotNull(likeSql) && attributeCheck.stringsNotNull(equalSql)) {

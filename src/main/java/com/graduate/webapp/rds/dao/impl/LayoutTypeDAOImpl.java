@@ -11,25 +11,25 @@ import com.egroup.util.SqlUtil;
 
 import javax.sql.DataSource;
 
-import com.graduate.webapp.rds.dao.Layout_typeDAO;
-import com.graduate.webapp.rds.entity.Layout_type;
+import com.graduate.webapp.rds.dao.LayoutTypeDAO;
+import com.graduate.webapp.rds.entity.LayoutType;
 
-public class Layout_typeDAOImpl implements Layout_typeDAO{
+public class LayoutTypeDAOImpl implements LayoutTypeDAO{
 private DataSource dataSource;
 
 public void setDataSource(DataSource dataSource) {
 this.dataSource = dataSource;
 }
 // insert Layout_type
-public void insert(Layout_type layout_type) {
+public void insert(LayoutType layoutType) {
 Connection conn = null ;
 PreparedStatement smt = null ;
 final String sql = "INSERT INTO layout_type(layoutTypeId,frameNumber ) VALUES ( ? ,  ? )";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, layout_type.getLayoutTypeId());
-smt.setInt(2, layout_type.getFrameNumber());
+smt.setInt(1, layoutType.getLayoutTypeId());
+smt.setInt(2, layoutType.getFrameNumber());
 smt.executeUpdate();
 smt.close();
 
@@ -48,15 +48,15 @@ conn.close();
 
 
 // insert Layout_type
-public void insert(List<Layout_type> layout_typeList) {
+public void insert(List<LayoutType> layoutTypeList) {
 Connection conn = null ;
 PreparedStatement smt = null ;
-final String sql = "INSERT INTO layout_type(layoutTypeId,frameNumber ) VALUES ( ? ,  ? )";
+final String sql = "INSERT INTO layoutType(layoutTypeId,frameNumber ) VALUES ( ? ,  ? )";
 try {
 conn = dataSource.getConnection();
-for (int i = 0; i < layout_typeList.size() ; i++) {
-smt.setInt(1, layout_typeList.get(0).getLayoutTypeId());
-smt.setInt(2, layout_typeList.get(1).getFrameNumber());
+for (int i = 0; i < layoutTypeList.size() ; i++) {
+smt.setInt(1, layoutTypeList.get(0).getLayoutTypeId());
+smt.setInt(2, layoutTypeList.get(1).getFrameNumber());
 smt.addBatch();
 }
 smt.executeBatch();
@@ -77,15 +77,15 @@ conn.close();
 
 
 // update Layout_type
-public void update(Layout_type layout_type,Layout_type oldLayout_type) {
+public void update(LayoutType layoutType,LayoutType oldLayoutType) {
 Connection conn = null ;
 PreparedStatement smt = null ;
-final String sql = "UPDATE layout_type SET frameNumber = ?  WHERE layoutTypeId = ? ";
+final String sql = "UPDATE layoutType SET frameNumber = ?  WHERE layoutTypeId = ? ";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, layout_type.getFrameNumber()!=null?layout_type.getFrameNumber():oldLayout_type.getFrameNumber());
-smt.setInt(2, layout_type.getLayoutTypeId()!=null?layout_type.getLayoutTypeId():oldLayout_type.getLayoutTypeId());
+smt.setInt(1, layoutType.getFrameNumber()!=null?layoutType.getFrameNumber():oldLayoutType.getFrameNumber());
+smt.setInt(2, layoutType.getLayoutTypeId()!=null?layoutType.getLayoutTypeId():oldLayoutType.getLayoutTypeId());
 smt.executeUpdate();
 smt.close();
 
@@ -104,14 +104,14 @@ conn.close();
 
 
 // delete Layout_type
-public void delete(Layout_type layout_type) {
+public void delete(LayoutType layoutType) {
 Connection conn = null ;
 PreparedStatement smt = null ;
-final String sql = "DELETE FROM layout_type WHERE layoutTypeId = ? ";
+final String sql = "DELETE FROM layoutType WHERE layoutTypeId = ? ";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, layout_type.getLayoutTypeId());
+smt.setInt(1, layoutType.getLayoutTypeId());
 smt.executeUpdate();
 smt.close();
 
@@ -130,19 +130,19 @@ conn.close();
 
 
 // GET Layout_type
-public Layout_type get(Layout_type layout_type) {
+public LayoutType get(LayoutType layoutType) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-final String sql = "SELECT a.layoutTypeId , a.frameNumber FROM layout_type a WHERE a.layoutTypeId = ? ";
+final String sql = "SELECT a.layoutTypeId , a.frameNumber FROM layoutType a WHERE a.layoutTypeId = ? ";
 try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
-smt.setInt(1, layout_type.getLayoutTypeId());
+smt.setInt(1, layoutType.getLayoutTypeId());
 rs = smt.executeQuery();
 if(rs.next()){
-layout_type.setLayoutTypeId(rs.getInt("layoutTypeId"));
-layout_type.setFrameNumber(rs.getInt("frameNumber"));
+layoutType.setLayoutTypeId(rs.getInt("layoutTypeId"));
+layoutType.setFrameNumber(rs.getInt("frameNumber"));
 }
 rs.close();
 smt.close();
@@ -158,19 +158,19 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return layout_type;
+return layoutType;
 }
 
 
 
 
 // getList Layout_type
-public List<Layout_type> getList(SqlUtil sqlUtil) {
+public List<LayoutType> getList(SqlUtil sqlUtil) {
 Connection conn = null ;
 ResultSet rs = null ;
 PreparedStatement smt = null ;
-List<Layout_type> layout_typeList = new ArrayList<Layout_type>();
-final String sql = "SELECT a.layoutTypeId , a.frameNumber FROM layout_type a "+
+List<LayoutType> layoutTypeList = new ArrayList<LayoutType>();
+final String sql = "SELECT a.layoutTypeId , a.frameNumber FROM layoutType a "+
 sqlUtil.getWhereGenerator().getWhereSql(true)+
 sqlUtil.getOrderGenerator().getOrderSql()+
 sqlUtil.getLimitGenerator().getLimitSql();
@@ -178,12 +178,12 @@ try {
 conn = dataSource.getConnection();
 smt = conn.prepareStatement(sql);
 rs = smt.executeQuery();
-Layout_type layout_type = new Layout_type();
+LayoutType layoutType = new LayoutType();
 while(rs.next()){
-layout_type = new Layout_type();
-layout_type.setLayoutTypeId(rs.getInt("layoutTypeId"));
-layout_type.setFrameNumber(rs.getInt("frameNumber"));
-layout_typeList.add(layout_type);
+layoutType = new LayoutType();
+layoutType.setLayoutTypeId(rs.getInt("layoutTypeId"));
+layoutType.setFrameNumber(rs.getInt("frameNumber"));
+layoutTypeList.add(layoutType);
 }
 rs.close();
 smt.close();
@@ -199,7 +199,7 @@ conn.close();
 } catch (SQLException e) {}
 }
 }
-return layout_typeList;
+return layoutTypeList;
 }
 
 
@@ -207,7 +207,7 @@ return layout_typeList;
 
 
 
-//countTotal Layout_type
+//countTotal LayoutType
 public Integer countTotal() {
 Connection conn = null ;
 ResultSet rs = null ;

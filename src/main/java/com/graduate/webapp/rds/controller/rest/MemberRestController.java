@@ -216,7 +216,7 @@ return Response.status(webResponse.getStatusCode()).entity(webResponse.getData()
 @GET
 @Path("/list")
 @GZIP
-public Response listCount(@QueryParam("search")String search,@Context HttpServletRequest request, @Context HttpServletResponse response) {
+public Response listCount(@QueryParam("search")String search,@Context HttpServletRequest request, @Context HttpServletResponse response, Integer offset, Integer limit) {
 // init DAO
 final MemberDAO memberDAO = (MemberDAO) context.getBean("memberDAO");
 // init func
